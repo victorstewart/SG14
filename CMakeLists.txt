@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(sg14 CXX)
+project(SG14 CXX)
 
 #
 # Option to build tests (default: OFF)
