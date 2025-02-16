@@ -62,7 +62,9 @@ union aligned_storage_helper {
 
 template<size_t Cap, size_t Align = alignof(aligned_storage_helper<Cap>)>
 struct aligned_storage {
-    using type = std::aligned_storage_t<Cap, Align>;
+    struct alignas(Align) type {
+        unsigned char data[Cap];
+    };
 };
 
 template<size_t Cap, size_t Align = alignof(aligned_storage_helper<Cap>)>
@@ -188,7 +190,7 @@ template<class R, class F, class... Args> using is_invocable_r = is_invocable_r_
 template<
     class Signature,
     size_t Capacity = inplace_function_detail::InplaceFunctionDefaultCapacity,
-    size_t Alignment = alignof(inplace_function_detail::aligned_storage_t<Capacity>)
+    size_t Alignment = alignof(inplace_function_detail::aligned_storage_t<Capacity, alignof(inplace_function_detail::aligned_storage_helper<Capacity>)>)
 >
 class inplace_function; // unspecified
 
